@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>CloudCrush — Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --blue: #2563eb;
+      --blue-light: #3b82f6;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --muted: #64748b;
+      --danger: #ef4444;
+      --radius: 14px;
+      --shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+      font-family: "Inter", "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: all 0.25s ease;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      padding: 32px;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--blue), #4f46e5);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 22px;
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      color: var(--blue);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    input[type="text"],
+    input[type="file"] {
+      padding: 9px 14px;
+      border: 1px solid #dbe3ef;
+      border-radius: 10px;
+      font-size: 14px;
+      background: #f9fafb;
+      color: #0f172a;
+    }
+
+    .btn {
+      border: 0;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      font-size: 14px;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--blue), var(--blue-light));
+      color: white;
+    }
+
+    .btn.ghost {
+      background: white;
+      border: 1px solid #e2e8f0;
+      color: #0f172a;
+    }
+
+    .btn.danger {
+      background: linear-gradient(135deg, #f87171, #dc2626);
+      color: white;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.1);
+    }
+
+    #status {
+      margin-top: 10px;
+      font-weight: 600;
+      color: var(--blue);
+    }
+
+    #files {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .file {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid #f1f5f9;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+      transform: translateY(0);
+    }
+
+    .file:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    }
+
+    .file h4 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: #111827;
+      word-break: break-word;
+    }
+
+    .file .meta {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .file .actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .file .download {
+      background: linear-gradient(90deg, #0ea5e9, #14b8a6);
+      color: white;
+    }
+
+    .file .del {
+      background: linear-gradient(90deg, #fb923c, #ef4444);
+      color: white;
+    }
+
+    #notifications {
+      margin-top: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .notif {
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: #f0f9ff;
+      border-left: 4px solid var(--blue);
+      color: #0b1220;
+      font-weight: 600;
+      animation: slideIn 0.4s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @media (max-width: 720px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      #files {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">CC</div>
+      <div>
+        <h1>CloudCrush</h1>
+        <div class="muted">Secure File Management — Your Digital Space</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div id="userEmail" class="muted">—</div>
+      <button id="logoutBtn" class="btn ghost">Logout</button>
+    </div>
+  </header>
+
+  <div class="card">
+    <div class="controls-row">
+      <input id="fileInput" type="file" />
+      <button id="uploadBtn" class="btn primary">Upload</button>
+
+      <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
+        <input id="searchInput" placeholder="Search by filename..." type="text" />
+        <button id="searchBtn" class="btn ghost">Search</button>
+      </div>
+    </div>
+
+    <div id="status">Loading...</div>
+    <div id="files"></div>
+
+    <h3 style="margin-top:24px;color:var(--blue);font-size:18px;">Notifications</h3>
+    <div id="notifications"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
+<!-- ⚠️ Logic remains 100% identical -->
+<script>
+  (() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromUrl = urlParams.get("token");
+    if (tokenFromUrl) {
+      localStorage.setItem("jwt", tokenFromUrl);
+      window.history.replaceState({}, document.title, "/dashboard");
+    }
+
+    const token =
+      localStorage.getItem("cc_token") ||
+      localStorage.getItem("jwt") ||
+      localStorage.getItem("token");
+    const AUTH_HEADER = token ? "Bearer " + token : null;
+
+    const setStatus = (msg, err = false) => {
+      const el = document.getElementById("status");
+      el.textContent = msg;
+      el.style.color = err ? "crimson" : "var(--blue)";
+    };
+
+    if (!AUTH_HEADER) {
+      alert("No JWT found. Please login.");
+      return (location.href = "/login");
+    }
+
+    const payload = (() => {
+      try {
+        const p = token.split(".")[1];
+        return JSON.parse(atob(p.replace(/-/g, "+").replace(/_/g, "/")));
+      } catch {
+        return null;
+      }
+    })();
+
+    if (payload?.sub || payload?.email) {
+      document.getElementById("userEmail").textContent =
+        payload.sub || payload.email;
+    }
+
+    const escapeHtml = (s) =>
+      s
+        ? s.replace(/[&<>"']/g, (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[c])
+          )
+        : "";
+
+    async function fetchFiles() {
+      setStatus("Loading files...");
+      const res = await fetch("/api/metadata/my-files", {
+        headers: { Authorization: AUTH_HEADER },
+      });
+      if (res.status === 401 || res.status === 403) {
+        setStatus("Unauthorized. Please login again.", true);
+        localStorage.clear();
+        return (location.href = "/login");
+      }
+      if (!res.ok) return setStatus("Failed: " + res.status, true);
+      const files = await res.json();
+      setStatus(`Files loaded • ${files.length}`);
+      renderFiles(files);
+    }
+
+    async function uploadFile() {
+      const file = document.getElementById("fileInput").files[0];
+      if (!file) return alert("Select a file");
+      setStatus("Uploading...");
+      const fd = new FormData();
+      fd.append("file", file);
+      const res = await fetch("/api/metadata/upload", {
+        method: "POST",
+        headers: { Authorization: AUTH_HEADER },
+        body: fd,
+      });
+      if (!res.ok) return setStatus("Upload failed", true);
+      await res.json().catch(() => {});
+      setStatus("Upload successful");
+      fetchFiles();
+    }
+
+    async function deleteFile(name) {
+      if (!confirm("Delete " + name + "?")) return;
+      setStatus("Deleting...");
+      const res = await fetch(
+        "/api/metadata/delete?filename=" + encodeURIComponent(name),
+        { method: "DELETE", headers: { Authorization: AUTH_HEADER } }
+      );
+      if (!res.ok) return setStatus("Delete failed", true);
+      setStatus("Deleted " + name);
+      fetchFiles();
+    }
+
+    async function downloadFile(name) {
+      setStatus("Downloading...");
+      const res = await fetch(
+        "/api/metadata/download/" + encodeURIComponent(name),
+        { headers: { Authorization: AUTH_HEADER } }
+      );
+      if (!res.ok) return setStatus("Download failed", true);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      a.click();
+      URL.revokeObjectURL(url);
+      setStatus("Downloaded " + name);
+    }
+
+    async function searchFiles() {
+      const q = document.getElementById("searchInput").value.trim();
+      if (!q) return fetchFiles();
+      setStatus("Searching...");
+      const res = await fetch(
+        "/api/metadata/search?query=" + encodeURIComponent(q),
+        { headers: { Authorization: AUTH_HEADER } }
+      );
+      if (!res.ok) return setStatus("Search failed", true);
+      const files = await res.json();
+      setStatus(`Found ${files.length} results`);
+      renderFiles(files);
+    }
+
+    function renderFiles(files) {
+      const el = document.getElementById("files");
+      el.innerHTML = files.length
+        ? ""
+        : '<div class="muted" style="grid-column:1/-1;text-align:center">No files found.</div>';
+      files.forEach((f) => {
+        const div = document.createElement("div");
+        div.className = "file";
+        const safeName = (f.filename || "").replace(/'/g, "\\'");
+        div.innerHTML = `
+          <div>
+            <h4>${escapeHtml(f.filename)}</h4>
+            <div class="meta">${escapeHtml(f.owner || "")} • ${(f.size || 0) / 1024 | 0} KB</div>
+          </div>
+          <div class="actions">
+            <button class="btn download" onclick="downloadFile('${safeName}')">Download</button>
+            <button class="btn del" onclick="deleteFile('${safeName}')">Delete</button>
+          </div>`;
+        el.appendChild(div);
+      });
+    }
+
+    let stompClient = null;
+    (function initWS() {
+      try {
+        const sock = new SockJS("/ws");
+        stompClient = Stomp.over(sock);
+        stompClient.connect({}, () => {
+          stompClient.subscribe("/topic/notifications", (msg) => {
+            const d = document.createElement("div");
+            d.className = "notif";
+            d.textContent = msg.body;
+            document.getElementById("notifications").prepend(d);
+            setStatus("Notification: " + msg.body);
+          });
+        });
+      } catch (e) {
+        console.warn("WebSocket failed", e);
+      }
+    })();
+
+    document.getElementById("uploadBtn").onclick = uploadFile;
+    document.getElementById("searchBtn").onclick = searchFiles;
+    document.getElementById("logoutBtn").onclick = () => {
+      localStorage.clear();
+      location.href = "/login";
+    };
+    window.downloadFile = downloadFile;
+    window.deleteFile = deleteFile;
+    fetchFiles();
+  })();
+</script>
+</body>
+</html>

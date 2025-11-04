@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>CloudCrush — Register</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        :root{
+          --bg:#ffffff;
+          --accent:#6ea8ff;
+          --accent-2:#bda4ff;
+          --muted:#6b7280;
+          --text:#0f172a;
+          --radius:14px;
+          font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+        }
+        html,body{height:100%;margin:0;background:linear-gradient(180deg,#fbfdff,#ffffff)}
+        .center{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+        .card{max-width:520px;width:100%;background:#fff;border-radius:var(--radius);padding:28px;box-shadow:0 10px 30px rgba(16,24,40,0.06);border:1px solid rgba(99,102,241,0.04)}
+        .brand{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+        .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800}
+        h1{margin:0;font-size:20px;color:var(--text)}
+        p.tag{color:var(--muted);margin:6px 0 16px}
+        form{display:grid;gap:10px}
+        input{padding:12px;border-radius:10px;border:1px solid rgba(15,23,42,0.06);font-size:14px}
+        button.cta{padding:12px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-weight:600;cursor:pointer}
+        .small{font-size:13px;color:var(--muted);text-align:center;margin-top:10px}
+        .founder{font-weight:700;color:var(--accent-2)}
+        .err{color:#b91c1c;text-align:center;margin-top:8px;font-size:13px}
+    </style>
+</head>
+<body>
+<div class="center">
+    <section class="card">
+        <div class="brand">
+            <div class="logo">CC</div>
+            <div>
+                <h1>CloudCrush</h1>
+                <div style="color:var(--muted);font-size:13px">Your personal alternative to Google Drive</div>
+            </div>
+        </div>
+
+        <p class="tag">Because documents and memories both are important — <span class="founder">Nandini Sharma</span></p>
+
+        <form id="registerForm">
+            <input id="fullName" type="text" placeholder="Full name" required />
+            <input id="email" type="email" placeholder="Email address" required />
+            <input id="password" type="password" placeholder="Choose a password" required />
+            <button class="cta" type="submit">Create account</button>
+        </form>
+
+        <div id="registerMessage" class="err" aria-live="polite"></div>
+
+        <div class="small">Already have an account? <a th:href="@{/login}" href="/login" style="color:var(--accent-2);font-weight:600;text-decoration:none">Sign in</a></div>
+    </section>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('registerForm');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const fullName = document.getElementById('fullName').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        try {
+          const res = await fetch('/api/auth/register', {
+            method:'POST',
+            headers:{ 'Content-Type':'application/json' },
+            body: JSON.stringify({ fullName, email, password })
+          });
+          if (!res.ok) throw new Error('Failed');
+          alert('Registration successful 🎉');
+          window.location.href = '/login';
+        } catch (err) {
+          document.getElementById('registerMessage').textContent = 'User already exists or error';
+        }
+      });
+    });
+</script>
+</body>
+</html>
