@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@FeignClient(name = "storage-service", url = "http://localhost:8083/api/storage")
+@FeignClient(name = "storage-service", url = "http://storage-service:8083/api/storage")
 public interface StorageClient {
 
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
