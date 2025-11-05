@@ -1,0 +1,74 @@
+services:
+  - type: web
+    name: eureka-server
+    env: docker
+    plan: free
+    dockerfilePath: ./eureka-server/Dockerfile
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: default
+
+  - type: web
+    name: api-gateway
+    env: docker
+    plan: free
+    dockerfilePath: ./api-gateway/Dockerfile
+    envVars:
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: https://eureka-server.onrender.com/eureka/
+
+  - type: web
+    name: auth-service
+    env: docker
+    plan: free
+    dockerfilePath: ./auth-service/Dockerfile
+    envVars:
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: https://eureka-server.onrender.com/eureka/
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://cloudcrush-mysql:3306/auth_db
+      - key: SPRING_DATASOURCE_USERNAME
+        value: root
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: password
+
+  - type: web
+    name: metadata-service
+    env: docker
+    plan: free
+    dockerfilePath: ./metadata-service/Dockerfile
+    envVars:
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: https://eureka-server.onrender.com/eureka/
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://cloudcrush-mysql:3306/metadata_db
+      - key: SPRING_DATASOURCE_USERNAME
+        value: root
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: password
+      - key: SPRING_DATA_REDIS_HOST
+        value: cloudcrush-redis
+      - key: SPRING_DATA_REDIS_PORT
+        value: 6379
+
+  - type: web
+    name: storage-service
+    env: docker
+    plan: free
+    dockerfilePath: ./storage-service/Dockerfile
+    envVars:
+      - key: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+        value: https://eureka-server.onrender.com/eureka/
+      - key: SUPABASE_ACCESS_KEY
+        sync: false
+      - key: SUPABASE_SECRET_KEY
+        sync: false
+
+  - type: redis
+    name: cloudcrush-redis
+    ipAllowList: []
+
+  - type: pserv
+    name: cloudcrush-mysql
+    env: docker
+    dockerCommand: "docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=auth_db -e MYSQL_DATABASE=metadata_db -p 3306:3306 mysql:8"
