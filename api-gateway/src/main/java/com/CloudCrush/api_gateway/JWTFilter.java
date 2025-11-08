@@ -22,16 +22,14 @@ public class JWTFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
-        System.out.println("🔍 Actual request path in JWTFilter: " + path);
+
         // Allow public endpoints (login/register)
-        if (path.matches(".*/auth/(create|login)(/)?$")) {
-            System.out.println("🔓 Skipping JWT for public endpoint: " + path);
+        if (path.contains("/api/auth/login") || path.contains("/api/auth/register")) {
             return chain.filter(exchange);
         }
 
         String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            System.out.println("❌ Missing or invalid Authorization header");
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
         }
@@ -43,10 +41,9 @@ public class JWTFilter implements GlobalFilter {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-            System.out.println("✅ JWT verified for subject: " + claims.getSubject());
+
             // You can extract user info from claims here if needed
         } catch (Exception e) {
-            System.out.println("❌ JWT validation failed: " + e.getMessage());
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
         }

@@ -15,7 +15,7 @@ public class Controller {
 
     private final UserService authService;
 
-    @PostMapping("/create")
+    @PostMapping("/register")
     public String register(@RequestBody UserEntity user) {
         return authService.register(user);
     }
