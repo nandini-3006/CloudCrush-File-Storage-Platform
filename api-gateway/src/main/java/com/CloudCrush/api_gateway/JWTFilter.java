@@ -22,7 +22,7 @@ public class JWTFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
-
+        System.out.println("🔍 Actual request path in JWTFilter: " + path);
         // Allow public endpoints (login/register)
         if (path.matches(".*/api/auth/(create|login)(/)?$")) {
             System.out.println("🔓 Skipping JWT for public endpoint: " + path);
