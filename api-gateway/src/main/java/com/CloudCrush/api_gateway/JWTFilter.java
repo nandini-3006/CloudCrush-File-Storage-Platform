@@ -24,8 +24,8 @@ public class JWTFilter implements GlobalFilter {
         String path = exchange.getRequest().getURI().getPath();
 
         // Allow public endpoints (login/register)
-        if (path.contains("api//auth/login") || path.contains("api//auth/create")) {
-            System.out.println("🔓 Skipping JWT check for: " + path);
+        if (path.matches(".*/api/auth/(create|login)(/)?$")) {
+            System.out.println("🔓 Skipping JWT for public endpoint: " + path);
             return chain.filter(exchange);
         }
 
