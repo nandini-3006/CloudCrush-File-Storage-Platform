@@ -3,123 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CloudCrush – Your Personal Alternative to Google Drive</title>
+  <meta name="description" content="☁️ CloudCrush — Your Personal Alternative to Google Drive. A cloud-native microservices-based storage platform built with Spring Boot, Docker, Jenkins, and Supabase.">
+  <meta name="author" content="Nandini Sharma">
+  <meta property="og:title" content="CloudCrush | Your Personal Alternative to Google Drive">
+  <meta property="og:description" content="Because documents and memories — both deserve a safe home. 💙">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://img.icons8.com/fluency/96/cloud.png">
+  <meta name="theme-color" content="#0077ff">
+  <link rel="icon" href="https://img.icons8.com/fluency/48/cloud.png" type="image/png">
+  <title>☁️ CloudCrush | Your Personal Alternative to Google Drive</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(180deg, #f9fbff 0%, #eaf3ff 100%);
-      color: #1a1a1a;
-      line-height: 1.6;
-      padding: 0;
-      overflow-x: hidden;
-    }
-
-    header {
-      text-align: center;
-      padding: 80px 20px 40px;
-      background: linear-gradient(135deg, #007bff 0%, #5ab9ff 100%);
-      color: white;
-      animation: fadeInDown 1.2s ease;
-      border-bottom: 4px solid #007bff33;
-    }
-
-    header h1 {
-      font-size: 3em;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-
-    header p {
-      font-size: 1.3em;
-      margin-top: 10px;
-      opacity: 0.9;
-    }
-
-    section {
-      max-width: 1100px;
-      margin: 60px auto;
-      background: white;
-      border-radius: 16px;
-      padding: 40px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-      animation: fadeInUp 1.3s ease;
-      transition: transform 0.3s ease;
-    }
-
-    section:hover {
-      transform: translateY(-3px);
-    }
-
-    h2 {
-      color: #007bff;
-      margin-bottom: 15px;
-      font-weight: 600;
-      font-size: 1.8em;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-      font-size: 1em;
-    }
-
-    th, td {
-      border-bottom: 1px solid #e6e6e6;
-      padding: 10px 15px;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    th {
-      color: #007bff;
-      font-weight: 600;
-      width: 20%;
-    }
-
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 1em;
-      color: #555;
-      border-top: 1px solid #eee;
-      background: #f8fbff;
-      animation: fadeIn 2s ease;
-    }
-
-    .emoji {
-      font-size: 1.3em;
-      margin-right: 5px;
-    }
-
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .highlight {
-      background: #e9f3ff;
-      padding: 10px 14px;
-      border-radius: 8px;
-      display: inline-block;
-    }
-
-    ul { margin-top: 10px; margin-left: 25px; }
-    li { margin-bottom: 6px; }
-
-  </style>
 </head>
 <body>
 
