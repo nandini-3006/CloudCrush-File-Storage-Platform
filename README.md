@@ -1,19 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="☁️ CloudCrush — Your Personal Alternative to Google Drive. A cloud-native microservices-based storage platform built with Spring Boot, Docker, Jenkins, and Supabase.">
-  <meta name="author" content="Nandini Sharma">
-  <meta property="og:title" content="CloudCrush | Your Personal Alternative to Google Drive">
-  <meta property="og:description" content="Because documents and memories — both deserve a safe home. 💙">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://img.icons8.com/fluency/96/cloud.png">
-  <meta name="theme-color" content="#0077ff">
-  <link rel="icon" href="https://img.icons8.com/fluency/48/cloud.png" type="image/png">
-  <title>☁️ CloudCrush | Your Personal Alternative to Google Drive</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-</head>
 <body>
 
 <header>
