@@ -53,8 +53,6 @@
     <tr><td>Real-Time</td><td>WebSocket</td></tr>
     <tr><td>Cloud Storage</td><td>Supabase (S3-compatible)</td></tr>
     <tr><td>Containerization</td><td>Docker, Docker Compose</td></tr>
-    <tr><td>CI/CD Pipeline</td><td>Jenkins, Docker Hub</td></tr>
-    <tr><td>Build Tool</td><td>Maven</td></tr>
   </table>
 </section>
 
@@ -63,11 +61,6 @@
   <ul>
     <li>Each microservice has its own Dockerfile and configuration.</li>
     <li>All containers are orchestrated using <strong>Docker Compose</strong> for smooth startup.</li>
-  </ul>
-  <h3>🚀 Jenkins CI/CD Pipeline</h3>
-  <ul>
-    <li>Every code push triggers Jenkins.</li>
-    <li>Automated builds via <code>mvn clean package</code>.</li>
     <li>Docker images are built and pushed to Docker Hub.</li>
     <li>Docker Compose redeploys updated containers automatically.</li>
   </ul>
@@ -79,17 +72,6 @@
     <li>Supabase ensures scalable cloud storage.</li>
     <li>WebSocket ensures real-time sync across clients.</li>
   </ul>
-</section>
-
-<section>
-  <h2>🌈 Future Enhancements</h2>
-  <ul>
-    <li>🌍 Public sharing & access controls</li>
-    <li>📁 Folder hierarchies and file versioning</li>
-    <li>🔒 OAuth2 and multi-factor authentication</li>
-    <li>☁️ Migration to Kubernetes for advanced orchestration</li>
-  </ul>
-  <p>🤝 Ready to collaborate, get suggestions, and improve further!</p>
 </section>
 
 <footer>
