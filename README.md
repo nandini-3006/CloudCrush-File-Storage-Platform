@@ -57,7 +57,7 @@
 </section>
 
 <section>
-  <h2>🐳 Docker, DevOps & Scalability</h2>
+  <h2>🐳 Docker</h2>
   <ul>
     <li>Each microservice has its own Dockerfile and configuration.</li>
     <li>All containers are orchestrated using <strong>Docker Compose</strong> for smooth startup.</li>
